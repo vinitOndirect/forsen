@@ -1,0 +1,31 @@
+name: CI - Docker Build and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: 🐳 Build Docker image
+        run: docker build -t cicd-app .
+
+      - name: ✅ Run container to test it starts
+        run: |
+          docker run -d -p 8090:8090 --name test-container cicd-app
+          sleep 5  # give server time to start
+          curl --fail http://localhost:8090/ping
+
+      - name: 🧹 Clean up container
+        run: docker rm -f test-container
