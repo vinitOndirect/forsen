@@ -23,7 +23,7 @@ jobs:
 
       - name: ✅ Run container to test it starts
         run: |
-          docker run -d -p 8090:5000 --name test-container cicd-app
+          docker run -d -p 8090:8090 --name test-container cicd-app
           sleep 5  # give server time to start
           curl --fail http://localhost:8090/ping
 
