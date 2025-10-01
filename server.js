@@ -9,6 +9,6 @@ app.use(express.json());
 // addign a new piece of code for creating a pr
 app.use("/ping", (req, res) => res.send("pong"));
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
